@@ -2,21 +2,11 @@ package dao;
 
 import entity.ChiTietHoaDon;
 import entity.HoaDon;
-import entity.KhachHang;
-import entity.NhanVien;
 import entity.SanPham;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ChiTietHoaDonDAO {
     private EntityManager em;

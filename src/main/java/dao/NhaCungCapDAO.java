@@ -26,7 +26,6 @@ public class NhaCungCapDAO {
     }
 
     public ArrayList<NhaCungCap> getNhaCungCapByTen(String tenNhaCungCap){
-        // use operation like in JPQL
         return (ArrayList<NhaCungCap>) em.createQuery("SELECT n FROM NhaCungCap n WHERE n.tenNCC LIKE :tenNCC")
                 .setParameter("tenNCC", "%" + tenNhaCungCap + "%")
                 .getResultList();

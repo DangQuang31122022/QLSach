@@ -21,7 +21,6 @@ public class TaiKhoanDAO {
     }
 
     public TaiKhoan timTaiKhoanByEmail(String email) {
-        // join nhanvien and taikhoan, email belongs to nhanvien
         return em.createQuery("SELECT tk FROM TaiKhoan tk JOIN tk.tenDangNhap nv WHERE nv.email = :email", TaiKhoan.class)
                 .setParameter("email", email)
                 .getSingleResult();

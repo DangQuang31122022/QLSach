@@ -1,19 +1,11 @@
 package dao;
 
-import entity.NhaCungCap;
 import entity.SanPham;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Query;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class SanPhamDAO {
     private EntityManager em;
@@ -51,7 +43,6 @@ public class SanPhamDAO {
 //            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //        return listSanPham;
-        // dont get all field just SanPham(maSP, tenSP, nhaCungCap, soLuong, loaiSP, donGiaBan);
         return (ArrayList<SanPham>) em.createQuery("SELECT sp FROM SanPham sp", SanPham.class).getResultList();
     }
     
@@ -140,14 +131,6 @@ public class SanPhamDAO {
 //            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //        return null;
-
-//        String sql = "SELECT TOP 10     SanPham.maSP, sum(ChiTietHoaDon.soLuong) as tongSoLuong \n" +
-//                        "FROM        ChiTietHoaDon INNER JOIN\n" +
-//                        "                  HoaDon ON ChiTietHoaDon.maHoaDon = HoaDon.maHoaDon INNER JOIN\n" +
-//                        "                  sanPham ON ChiTietHoaDon.maSP = sanPham.maSP\n" +
-//                        "\n" +
-//                        "group by sanPham.maSP, sanPham.tenSP\n" +
-//                        "order by tongSoLuong desc";
         String jpql = "SELECT sp, SUM(cthd.soLuong) as tongSoLuong " +
                 "FROM ChiTietHoaDon cthd " +
                 "JOIN cthd.hoaDon hd " +

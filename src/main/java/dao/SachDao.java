@@ -46,7 +46,6 @@ public class SachDao  {
 //            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //        return listSach;
-		// using like S% to get all books
 		return (ArrayList<Sach>) em.createQuery("SELECT s FROM SanPham s", Sach.class).getResultList();
     }
 	public Sach timSachTheoTenSach(String ten) {
