@@ -1,10 +1,9 @@
 package entity;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import constant.Constants;
+import dao.NhaCungCapDAO;
+import jakarta.persistence.*;
 //import org.apache.commons.compress.harmony.unpack200.bytecode.forms.ThisFieldRefForm;
 
 //import dao.NhaCungCapDAO;
@@ -32,13 +31,14 @@ public class NhaCungCap {
 		this.SoDienThoai = SDT;
 		this.email = email;
 	}
-//	public String auto_ID(){
-//	       NhaCungCapDAO ncc= new NhaCungCapDAO();
-//	        String idPrefix = "NCC";
-//	        int length = ncc.getAllNhaCungCap().size();
-//	        String finalId = idPrefix + String.format("%02d", length + 1);
-//	        return finalId;
-//	    }
+	public String auto_ID(){
+		EntityManager em = Persistence.createEntityManagerFactory(Constants.DatabaseType).createEntityManager();
+	       NhaCungCapDAO ncc= new NhaCungCapDAO(em);
+	        String idPrefix = "NCC";
+	        int length = ncc.getAllNhaCungCap().size();
+	        String finalId = idPrefix + String.format("%02d", length + 1);
+	        return finalId;
+	    }
 	public NhaCungCap(String tenNCC, String diaChi) {
 		super();
 		this.tenNCC = tenNCC;

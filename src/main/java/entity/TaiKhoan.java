@@ -33,7 +33,7 @@ public class TaiKhoan {
     public TaiKhoan(NhanVien tenDangNhap) {
         this.tenDangNhap = tenDangNhap;
     }
-    //    public taiKhoan(String tenDangNhap, String matKhau, String phanQuyen) {
+//        public taiKhoan(String tenDangNhap, String matKhau, String phanQuyen) {
 //        this.tenDangNhap = tenDangNhap;
 //        this.matKhau = matKhau;
 //        this.phanQuyen = phanQuyen;
@@ -42,7 +42,7 @@ public class TaiKhoan {
 //    public taiKhoan(String tenDangNhap) {
 //        this.tenDangNhap = tenDangNhap;
 //    }
-
+//
 //    public taiKhoan(String tenDangNhap, String matKhau) {
 //        this.tenDangNhap = tenDangNhap;
 //        this.matKhau = matKhau;

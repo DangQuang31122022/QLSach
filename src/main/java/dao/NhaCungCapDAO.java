@@ -1,6 +1,6 @@
 package dao;
 
-import Constant.Constants;
+import constant.Constants;
 import entity.NhaCungCap;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -62,12 +62,12 @@ public class NhaCungCapDAO {
                 .getSingleResult();
     }
     public static NhaCungCap getNhaCungCapByGmail(String gmail){
-        return (NhaCungCap) Persistence.createEntityManagerFactory(Constants.SQLSERVER).createEntityManager().createQuery("SELECT n FROM NhaCungCap n WHERE n.email = :email")
+        return (NhaCungCap) Persistence.createEntityManagerFactory(Constants.DatabaseType).createEntityManager().createQuery("SELECT n FROM NhaCungCap n WHERE n.email = :email")
                 .setParameter("email", gmail)
                 .getSingleResult();
     }
     public static NhaCungCap getNhaCungCapBySdt(String sdt) {
-        return (NhaCungCap) Persistence.createEntityManagerFactory(Constants.SQLSERVER).createEntityManager().createQuery("SELECT n FROM NhaCungCap n WHERE n.SoDienThoai = :sdt")
+        return (NhaCungCap) Persistence.createEntityManagerFactory(Constants.DatabaseType).createEntityManager().createQuery("SELECT n FROM NhaCungCap n WHERE n.SoDienThoai = :sdt")
                 .setParameter("sdt", sdt)
                 .getSingleResult();
     }

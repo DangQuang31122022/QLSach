@@ -1,10 +1,9 @@
 package entity;
 
 //import dao.NhanVienDAO;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import constant.Constants;
+import dao.NhanVienDAO;
+import jakarta.persistence.*;
 
 @Entity @Table(name = "nhanvien")
 public class NhanVien {
@@ -21,13 +20,14 @@ public class NhanVien {
 	public NhanVien() {
 		super();
 	}
-//	public String auto_ID(){
-//	       NhanVienDAO NV_DAO = new NhanVienDAO();
-//	        String idPrefix = "NV";
-//	        int length = NV_DAO.getAllNhanVien().size();
-//	        String finalId = idPrefix + String.format("%03d", length + 1);
-//	        return finalId;
-//	    }
+	public String auto_ID(){
+		EntityManager em = Persistence.createEntityManagerFactory(Constants.DatabaseType).createEntityManager();
+	       NhanVienDAO NV_DAO = new NhanVienDAO(em);
+	        String idPrefix = "NV";
+	        int length = NV_DAO.getAllNhanVien().size();
+	        String finalId = idPrefix + String.format("%03d", length + 1);
+	        return finalId;
+	    }
 	public NhanVien(String tenNhanVien, boolean gioiTinh, String chucVu, String soDienThoai, String email) {
 		super();
 		this.tenNhanVien = tenNhanVien;

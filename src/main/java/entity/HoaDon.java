@@ -5,6 +5,9 @@ import java.util.ArrayList;
 
 //import dao.ChiTietHoaDonDAO;
 //import dao.HoaDonDAO;
+import constant.Constants;
+import dao.ChiTietHoaDonDAO;
+import dao.HoaDonDAO;
 import jakarta.persistence.*;
 
 @Entity
@@ -20,19 +23,20 @@ public class HoaDon {
     @JoinColumn(name = "maKH")
     private KhachHang khachHang;
 
-//    private String auto_IDPHoaDon() {
-//        //auto gen id hóa đơn dạng HDXXXXXX
-//        HoaDonDAO phieuNhap_DAO = new HoaDonDAO();
-//        String idPrefix = "HD";
-//        int length = phieuNhap_DAO.getAllHoaDon().size();
-//        String finalId = idPrefix + String.format("%05d", length + 1);
-//        return finalId;
-//
-//    }
+    private String auto_IDPHoaDon() {
+        EntityManager em = Persistence.createEntityManagerFactory(Constants.DatabaseType).createEntityManager();
+        //auto gen id hóa đơn dạng HDXXXXXX
+        HoaDonDAO phieuNhap_DAO = new HoaDonDAO(em);
+        String idPrefix = "HD";
+        int length = phieuNhap_DAO.getAllHoaDon().size();
+        String finalId = idPrefix + String.format("%05d", length + 1);
+        return finalId;
 
-//    public HoaDon() {
-//        this.maHD = auto_IDPHoaDon();
-//    }
+    }
+
+    public HoaDon() {
+        this.maHD = auto_IDPHoaDon();
+    }
 
     public HoaDon(HoaDon hd) {
         this.ngayLapHD = hd.ngayLapHD;
@@ -87,15 +91,16 @@ public class HoaDon {
         this.khachHang = khachHang;
     }
 
-//    public double tongTien() {
-//        double tongTien = 0;
-//        ChiTietHoaDonDAO cthd_DAO = new ChiTietHoaDonDAO();
-//        ArrayList<ChiTietHoaDon> listChiTietHoaDon = cthd_DAO.getAllCTHDByHoaDon(this);
-//
-//        for (ChiTietHoaDon cthd : listChiTietHoaDon) {
-//            tongTien += cthd.thanhTien();
-//        }
-//
-//        return tongTien;
-//    }
+    public double tongTien() {
+        EntityManager em = Persistence.createEntityManagerFactory(Constants.DatabaseType).createEntityManager();
+        double tongTien = 0;
+        ChiTietHoaDonDAO cthd_DAO = new ChiTietHoaDonDAO(em);
+        ArrayList<ChiTietHoaDon> listChiTietHoaDon = cthd_DAO.getAllCTHDByHoaDon(this);
+
+        for (ChiTietHoaDon cthd : listChiTietHoaDon) {
+            tongTien += cthd.thanhTien();
+        }
+
+        return tongTien;
+    }
 }

@@ -56,7 +56,7 @@ public class TaiKhoanDAO {
         return -1;
     }
     public boolean cvTaiKhoan(String tk) {
-        return em.createQuery("SELECT tk FROM TaiKhoan tk WHERE tk.tenDangNhap = :tk AND tk.phanQuyen = 'QL'", TaiKhoan.class)
+        return em.createQuery("SELECT tk FROM TaiKhoan tk WHERE tk.tenDangNhap.maNhanVien = :tk AND tk.phanQuyen = 'QL'", TaiKhoan.class)
                 .setParameter("tk", tk)
                 .getResultList().size() > 0;
     }

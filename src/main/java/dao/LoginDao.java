@@ -5,7 +5,7 @@
 package dao;
 
 
-import Constant.Constants;
+import constant.Constants;
 import entity.TaiKhoan;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -16,7 +16,7 @@ import jakarta.persistence.Persistence;
  * @author Admin
  */
 public class LoginDao {
-    private EntityManager em = Persistence.createEntityManagerFactory(Constants.MARIADB).createEntityManager();
+    private EntityManager em = Persistence.createEntityManagerFactory(Constants.DatabaseType).createEntityManager();
     private EntityTransaction et;
 
     /**
@@ -51,7 +51,7 @@ public class LoginDao {
 //
 //    }
     public boolean checkLogin(String username, String matkhau) {
-        return em.createQuery("SELECT tk FROM TaiKhoan tk WHERE tk.tenDangNhap = :username AND tk.matKhau = :matkhau", TaiKhoan.class)
+        return em.createQuery("SELECT tk FROM TaiKhoan tk WHERE tk.tenDangNhap.maNhanVien = :username AND tk.matKhau = :matkhau", TaiKhoan.class)
                 .setParameter("username", username)
                 .setParameter("matkhau", matkhau)
                 .getResultList().size() > 0;

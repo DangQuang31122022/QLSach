@@ -3,8 +3,12 @@ package entity;
 //import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 
 //import dao.VppDao;
+import constant.Constants;
+import dao.VppDao;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Persistence;
 
 @Entity
 @DiscriminatorValue("VPP")
@@ -69,13 +73,14 @@ public class VPP extends SanPham {
 //	 * @param mauSac
 //	 * @param chatLieu
 	 */
-//	public String auto_ID() {
-//		VppDao vpp_dao = new VppDao();
-//		String idPrefix="H";
-//		int length=vpp_dao.getAllVPP().size();
-//		String finalId=idPrefix +String.format("%04d",length+1);
-//		return finalId;
-//	}
+	public String auto_ID() {
+		EntityManager em = Persistence.createEntityManagerFactory(Constants.DatabaseType).createEntityManager();
+		VppDao vpp_dao = new VppDao(em);
+		String idPrefix="H";
+		int length=vpp_dao.getAllVPP().size();
+		String finalId=idPrefix +String.format("%04d",length+1);
+		return finalId;
+	}
 	public VPP(String maSP, String tenSP, NhaCungCap nhaCungCap, int soLuongTK, double donGiaBan, String hinhAnh,
 			String xuatXu, String mauSac, String chatLieu) {
 		super(maSP, tenSP, nhaCungCap, soLuongTK, donGiaBan, hinhAnh);

@@ -6,9 +6,10 @@ package entity;
 
 //import dao.ChiTietPhieuNhapDAO;
 //import dao.PhieuNhapDAO;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import constant.Constants;
+import dao.ChiTietPhieuNhapDAO;
+import dao.PhieuNhapDAO;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.sql.Date;
@@ -23,22 +24,21 @@ public class PhieuNhap {
     private String maPhieuNhap;
     private Date ngayNhap;
 
-//    private String auto_IDPhieuNhap(){
-//        //auto gen id hóa đơn dạng HDXXXXXX
-//        PhieuNhapDAO phieuNhap_DAO = new PhieuNhapDAO();
-//        String idPrefix = "PN";
-//        int length = phieuNhap_DAO.getAllPhieuNhap().size();
-//        String finalId = idPrefix + String.format("%03d", length + 1);
-//        return finalId;
-//
-//    }
-    
-//    public PhieuNhap() {
-//        this.maPhieuNhap = auto_IDPhieuNhap();
-//    }
+    private String auto_IDPhieuNhap(){
+        EntityManager em = Persistence.createEntityManagerFactory(Constants.DatabaseType).createEntityManager();
+        //auto gen id hóa đơn dạng HDXXXXXX
+        PhieuNhapDAO phieuNhap_DAO = new PhieuNhapDAO(em);
+        String idPrefix = "PN";
+        int length = phieuNhap_DAO.getAllPhieuNhap().size();
+        String finalId = idPrefix + String.format("%03d", length + 1);
+        return finalId;
 
-    public PhieuNhap() {
     }
+    
+    public PhieuNhap() {
+        this.maPhieuNhap = auto_IDPhieuNhap();
+    }
+
 
     public PhieuNhap(String maPhieuNhap, Date ngayNhap) {
         this.maPhieuNhap = maPhieuNhap;
@@ -63,12 +63,13 @@ public class PhieuNhap {
 
     public double tongTien() {
         double tongTien = 0;
-//        ChiTietPhieuNhapDAO ctpn_DAO = new ChiTietPhieuNhapDAO();
-//        ArrayList<ChiTietPhieuNhap> listChiTietPhieuNhap = ctpn_DAO.getAllCTHDByHoaDon(this);
-//
-//        for (ChiTietPhieuNhap ctpn : listChiTietPhieuNhap) {
-//            tongTien += ctpn.thanhTien();
-//        }
+        EntityManager em = Persistence.createEntityManagerFactory(Constants.DatabaseType).createEntityManager();
+        ChiTietPhieuNhapDAO ctpn_DAO = new ChiTietPhieuNhapDAO(em);
+        ArrayList<ChiTietPhieuNhap> listChiTietPhieuNhap = ctpn_DAO.getAllCTHDByHoaDon(this);
+
+        for (ChiTietPhieuNhap ctpn : listChiTietPhieuNhap) {
+            tongTien += ctpn.thanhTien();
+        }
 
         return tongTien;
     }
