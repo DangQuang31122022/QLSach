@@ -1,5 +1,6 @@
 package server;
 
+import buisinesLogic.ForgotPasswordLogic;
 import buisinesLogic.LoginLogic;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -37,8 +38,8 @@ public class ProgressRunnable implements Runnable {
                     loginLogic.checkLogin();
                     break;
                 case "forgotPassword":
-//                    ForgotPasswordLogic forgotPasswordLogic = new ForgotPasswordLogic(em, client);
-//                    forgotPasswordLogic.checkForgotPassword();
+                    ForgotPasswordLogic forgotPasswordLogic = new ForgotPasswordLogic(client, em);
+                    forgotPasswordLogic.handleForgotPassword();
                     break;
                 default:
                     System.out.println("Unknown request: " + type);
