@@ -21,6 +21,7 @@ import java.util.Scanner;
 public class ProgressRunnable implements Runnable {
     private Socket client;
     private EntityManager em;
+
     public ProgressRunnable(Socket client, EntityManager em) {
         this.client = client;
         this.em = em;
@@ -30,19 +31,22 @@ public class ProgressRunnable implements Runnable {
     public void run() {
         try {
             Scanner scanner = new Scanner(client.getInputStream());
-            String type = scanner.nextLine();
-            System.out.println("Received request: " + type);
-            switch (type) {
-                case "login":
-                    LoginLogic loginLogic = new LoginLogic(em, client);
-                    loginLogic.checkLogin();
-                    break;
-                case "forgotPassword":
-                    ForgotPasswordLogic forgotPasswordLogic = new ForgotPasswordLogic(client, em);
-                    forgotPasswordLogic.handleForgotPassword();
-                    break;
-                default:
-                    System.out.println("Unknown request: " + type);
+            while (true) {
+                if (!scanner.hasNextLine()) break;
+                String type = scanner.nextLine();
+                System.out.println("Received request: " + type);
+                switch (type) {
+                    case "login":
+                        LoginLogic loginLogic = new LoginLogic(em, client);
+                        loginLogic.checkLogin();
+                        break;
+                    case "forgotPassword":
+                        ForgotPasswordLogic forgotPasswordLogic = new ForgotPasswordLogic(client, em);
+                        forgotPasswordLogic.handleForgotPassword();
+                        break;
+                    default:
+                        System.out.println("Unknown request: " + type);
+                }
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

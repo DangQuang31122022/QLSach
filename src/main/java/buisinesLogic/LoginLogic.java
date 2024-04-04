@@ -17,47 +17,57 @@ import java.util.Scanner;
 
 public class LoginLogic {
     private Socket client;
-    private LoginDao loginDao = new LoginDao();
+    private LoginDao loginDao;
     private EntityManager em;
     public LoginLogic(EntityManager em, Socket client) {
         this.em = em;
         this.client = client;
+        loginDao = new LoginDao(em);
     }
-    public boolean handleLogin(String request) {
-        JsonObject jsonObject = new JsonParser().parse(request).getAsJsonObject();
-        String username = jsonObject.get("username").getAsString();
-        String password = jsonObject.get("password").getAsString();
+    public boolean handleLogin(String username, String password) {
         return loginDao.checkLogin(username, password);
     }
-    public boolean hanndleRole(String request) {
+    public boolean hanndleRole(String username) {
         TaiKhoanDAO taiKhoanDAO = new TaiKhoanDAO(em);
-        JsonObject jsonObject = new JsonParser().parse(request).getAsJsonObject();
-        String username = jsonObject.get("username").getAsString();
         return taiKhoanDAO.cvTaiKhoan(username);
     }
     public void checkLogin() {
         // read json request
         try {
+            // Receive request from client
             Scanner sc = new Scanner(client.getInputStream());
             String request = sc.nextLine();
-            boolean loginSuccess = handleLogin(request);
+
+            JsonObject jsonObject = new JsonParser().parse(request).getAsJsonObject();
+            String username = jsonObject.get("username").getAsString();
+            String password = jsonObject.get("password").getAsString();
+
+            boolean loginSuccess = handleLogin(username, password);
+
+            // Send response to client
             PrintWriter pw = new PrintWriter(client.getOutputStream(), true);
             if (loginSuccess) {
                 System.out.println("Login success");
-                boolean isManager = hanndleRole(request);
 
-                Map<String, Boolean> responseMap = new HashMap<>();
-                responseMap.put("login", loginSuccess);
-                responseMap.put("role", isManager);
+                boolean isManager = hanndleRole(username);
 
-                Gson gson = new Gson();
-                String jsonResponse = gson.toJson(responseMap);
+//                Map<String, Boolean> responseMap = new HashMap<>();
+//                responseMap.put("login", true);
+//                responseMap.put("role", isManager);
+//
+//                Gson gson = new Gson();
+//                String jsonResponse = gson.toJson(responseMap);
+//                System.out.println(jsonResponse);
+                String jsonResponse = "{\"login\":true,\"role\":" + isManager + "}";
+
                 pw.println(jsonResponse);
             } else {
                 System.out.println("Login failed");
                 Map<String, Boolean> responseMap = new HashMap<>();
-                responseMap.put("login", loginSuccess);
-                pw.println(new Gson().toJson(responseMap));
+                responseMap.put("login", false);
+                Gson gson = new Gson();
+                String jsonResponse = gson.toJson(responseMap);
+                pw.println(jsonResponse);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

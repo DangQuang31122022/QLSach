@@ -10,7 +10,7 @@ import jakarta.persistence.*;
  *
  * @author LENOVO
  */
-@Entity
+@Entity @Table(name = "taikhoan")
 public class TaiKhoan {
     @Id
     @OneToOne

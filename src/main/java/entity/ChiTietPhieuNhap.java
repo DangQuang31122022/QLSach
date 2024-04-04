@@ -17,7 +17,7 @@ public class ChiTietPhieuNhap {
     @JoinColumn(name = "maSP")
     private SanPham sanPham;
     @Id
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "maPhieuNhap")
     private PhieuNhap phieuNhap;
     private int soLuong;
