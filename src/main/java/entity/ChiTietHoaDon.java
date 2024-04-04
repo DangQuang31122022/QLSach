@@ -13,7 +13,7 @@ public class ChiTietHoaDon {
     @JoinColumn(name = "maSP")
     private SanPham sanPham;
     @Id
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "maHoaDon")
     private HoaDon hoaDon;
     private int soLuong;

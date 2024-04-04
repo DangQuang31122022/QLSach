@@ -16,8 +16,11 @@ import jakarta.persistence.Persistence;
  * @author Admin
  */
 public class LoginDao {
-    private EntityManager em = Persistence.createEntityManagerFactory(Constants.DatabaseType).createEntityManager();
-    private EntityTransaction et;
+    private EntityManager em;
+
+    public LoginDao(EntityManager em) {
+        this.em = em;
+    }
 
     /**
      *
