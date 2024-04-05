@@ -22,43 +22,40 @@ public class ForgotPasswordLogic {
         this.client = client;
         this.em = em;
     }
-    public boolean checkMail() {
-        try {
-            Scanner sc = new Scanner(client.getInputStream());
-            String email = sc.nextLine();
+    public boolean checkMail(String mail) {
+
             nhanVienDAO = new NhanVienDAO(em);
-            if (nhanVienDAO.dieuKienQuenMatkhau(email)) {
+            if (nhanVienDAO.dieuKienQuenMatkhau(mail)) {
                 return true;
             }
             return false;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+
     }
-    public boolean changePassword() {
-        try {
-            taiKhoanDAO = new TaiKhoanDAO(em);
-            Scanner sc = new Scanner(client.getInputStream());
-            String request = sc.nextLine();
-            JsonObject jsonObject = new JsonParser().parse(request).getAsJsonObject();
-            String email = jsonObject.get("email").getAsString();
-            String password = jsonObject.get("password").getAsString();
-            TaiKhoan taiKhoan = taiKhoanDAO.timTaiKhoanByEmail(email);
-            if (taiKhoan != null) {
-                taiKhoanDAO.doiMatKhauTaiKhoan(taiKhoan, password);
-                return true;
-            }
-            return false;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    public boolean changePassword(String email, String password) {
+        taiKhoanDAO = new TaiKhoanDAO(em);
+
+        TaiKhoan taiKhoan = taiKhoanDAO.timTaiKhoanByEmail(email);
+        if (taiKhoan != null) {
+            taiKhoanDAO.doiMatKhauTaiKhoan(taiKhoan, password);
+            return true;
         }
+        return false;
     }
     public void handleForgotPassword() {
         try {
             Scanner sc = new Scanner(client.getInputStream());
+
+            // Receive request from client, get value from json request
             String request = sc.nextLine();
-            if (request.equals("checkMail")) {
-                boolean checkMail = checkMail();
+            System.out.println("Request: " + request);
+
+            JsonObject jsonObject = new JsonParser().parse(request).getAsJsonObject();
+            boolean isCheckMail = jsonObject.get("isCheckMail").getAsBoolean();
+            String email = jsonObject.get("email").getAsString();
+            System.out.println("Email: " + email);
+            System.out.println("isCheckMail: " + isCheckMail);
+            if (isCheckMail) {
+                boolean checkMail = checkMail(email);
                 if (checkMail) {
                     System.out.println("Check mail success");
                     client.getOutputStream().write(1);
@@ -66,8 +63,9 @@ public class ForgotPasswordLogic {
                     System.out.println("Check mail failed");
                     client.getOutputStream().write(0);
                 }
-            } else if (request.equals("changePassword")) {
-                boolean changePassword = changePassword();
+            } else {
+                String password = jsonObject.get("password").getAsString();
+                boolean changePassword = changePassword(email, password);
                 if (changePassword) {
                     System.out.println("Change password success");
                     client.getOutputStream().write(1);
@@ -76,6 +74,26 @@ public class ForgotPasswordLogic {
                     client.getOutputStream().write(0);
                 }
             }
+//            System.out.println("ok");
+//            Scanner sc = new Scanner(client.getInputStream());
+////            System.out.println(sc.nextLine());
+//            while (sc.hasNextLine()) {
+//                String request = sc.nextLine();
+//                System.out.println("Request: " + request);
+//                if (request.equals("changePassword")) {
+////                    handleForgotPassword(client);
+//                } else if (request.equals("checkMail")) {
+//                    boolean checkMail = checkMail(sc);
+//                    if (checkMail) {
+//                        System.out.println("Check mail success");
+//                        client.getOutputStream().write(1);
+//                    } else {
+//                        System.out.println("Check mail failed");
+//                        client.getOutputStream().write(0);
+//                    }
+//                }
+                // handle other requests...
+//            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
