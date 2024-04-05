@@ -37,6 +37,7 @@ public class LoginLogic {
             // Receive request from client
             Scanner sc = new Scanner(client.getInputStream());
             String request = sc.nextLine();
+            System.out.println("Info Login: " + request);
 
             JsonObject jsonObject = new JsonParser().parse(request).getAsJsonObject();
             String username = jsonObject.get("username").getAsString();

@@ -2,6 +2,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import constant.Constants;
+import dao.NhanVienDAO;
 import dao.TaiKhoanDAO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Persistence;
@@ -15,6 +16,8 @@ import java.util.Map;
 public class Main {
     public static void main(String[] args) throws IOException {
         try (EntityManager em = Persistence.createEntityManagerFactory("QLS SQlSERVER").createEntityManager()) {
+//            NhanVienDAO nhanVienDAO = new NhanVienDAO(em);
+//            System.out.println(nhanVienDAO.dieuKienQuenMatkhau("quangproforever@gmail.com"));
             ThreadPoolServer server = new ThreadPoolServer();
             server.createServerSocket(5000, em);
         }
