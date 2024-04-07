@@ -1,6 +1,8 @@
 package entity;
 
 
+import java.io.Serializable;
+
 import constant.Constants;
 import dao.NhaCungCapDAO;
 import jakarta.persistence.*;
@@ -9,7 +11,8 @@ import jakarta.persistence.*;
 //import dao.NhaCungCapDAO;
 //import dao.NhanVienDAO;
 @Entity @Table(name = "nhacungcap")
-public class NhaCungCap {
+public class NhaCungCap implements Serializable{
+	private static final long serialVersionUID = 3502783364597853840L;
 	@Id
 	private String maNCC;
 	@Column(columnDefinition = "nvarchar(255)")

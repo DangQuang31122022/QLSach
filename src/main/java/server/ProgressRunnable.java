@@ -10,6 +10,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import dao.LoginDao;
 import dao.TaiKhoanDAO;
+import entity.ChiTietHoaDon;
 import entity.HoaDon;
 import jakarta.persistence.EntityManager;
 
@@ -19,6 +20,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,13 +41,10 @@ public class ProgressRunnable implements Runnable {
         try {
             Scanner scanner = new Scanner(client.getInputStream());
             ObjectOutputStream out = new ObjectOutputStream(client.getOutputStream());
-//            ObjectInputStream in = new ObjectInputStream(client.getInputStream());
-//            String type = "";
             while (true) {
                 if (!scanner.hasNextLine()) break;
                 String type = scanner.nextLine();
                 System.out.println("Received request: " + type);
-//            	type = in.readUTF();
                 switch (type) {
                     case "login":
                         LoginLogic loginLogic = new LoginLogic(em, client);
@@ -58,10 +57,36 @@ public class ProgressRunnable implements Runnable {
                     case "loadTblHoaDon":
                     	QuanLyHoaDonLogic loadTblHD = new QuanLyHoaDonLogic(em, client);
                     	List<HoaDon> dshd =  loadTblHD.loadAllDataHD();
-                    	dshd.forEach(System.out::println);
                     	out.writeObject(dshd);
-                    	double[] listTongTien = loadTblHD.tinhTongTien();
+                    	double[] listTongTien = loadTblHD.tinhTongTien(dshd);
                     	out.writeObject(listTongTien);
+                    	break;
+                    case "loadTblChiTietHoaDon":
+                    	QuanLyHoaDonLogic loadTblCTHD = new QuanLyHoaDonLogic(em, client);
+                    	String hdID = scanner.nextLine();
+                    	List<ChiTietHoaDon> dsCTHD = loadTblCTHD.getAllCTHDByID(hdID);                    	
+                    	out.writeObject(dsCTHD);
+                    	break;
+                    case "btnTimKiemHD":
+                    	QuanLyHoaDonLogic btnTimKiemHD = new QuanLyHoaDonLogic(em, client);
+                    	String from = scanner.nextLine();
+                    	String to = scanner.nextLine();
+                    	Date ngayBatDau = Date.valueOf(from);
+            			Date ngayKetThuc = Date.valueOf(to);
+                    	List<HoaDon> dsHDTK = btnTimKiemHD.getDsHDByDate(ngayBatDau, ngayKetThuc);
+                    	out.writeObject(dsHDTK);
+                    	double[] listTongTienTK = btnTimKiemHD.tinhTongTien(dsHDTK);
+                    	out.writeObject(listTongTienTK);
+                    	break;
+                    case "btnXuatChiTietHoaDon":
+                    	QuanLyHoaDonLogic btnXuatCTHD = new QuanLyHoaDonLogic(em, client);
+                    	String IDbtnXuatCTHD = scanner.nextLine();
+                    	HoaDon hdBtnXuatCTHD = btnXuatCTHD.getHDByID(IDbtnXuatCTHD);
+                    	out.writeObject(hdBtnXuatCTHD);
+                    	double tongTienBtnXuatCTHD = btnXuatCTHD.tinhTongTien1HD(hdBtnXuatCTHD);
+                    	out.writeDouble(tongTienBtnXuatCTHD);
+                    	List<ChiTietHoaDon> cthdBtnXuatCTHD = btnXuatCTHD.getAllCTHDByID(IDbtnXuatCTHD);
+                    	out.writeObject(cthdBtnXuatCTHD);
                     	break;
                     default:
                         System.out.println("Unknown request: " + type);
@@ -71,25 +96,7 @@ public class ProgressRunnable implements Runnable {
             throw new RuntimeException(e);
         }
     }
-//    private class login {
-//        private LoginDao loginDao = new LoginDao();
-//        private EntityManager em;
-//        public login(EntityManager em) {
-//            this.em = em;
-//        }
-//        public boolean handleLogin(String request) {
-//            JsonObject jsonObject = new JsonParser().parse(request).getAsJsonObject();
-//            String username = jsonObject.get("username").getAsString();
-//            String password = jsonObject.get("password").getAsString();
-//            return loginDao.checkLogin(username, password);
-//        }
-//        public boolean hanndleRole(String request) {
-//            TaiKhoanDAO taiKhoanDAO = new TaiKhoanDAO(em);
-//            JsonObject jsonObject = new JsonParser().parse(request).getAsJsonObject();
-//            String username = jsonObject.get("username").getAsString();
-//            return taiKhoanDAO.cvTaiKhoan(username);
-//        }
-//    }
+
 }
 
 

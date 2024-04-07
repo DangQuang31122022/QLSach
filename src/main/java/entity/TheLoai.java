@@ -5,9 +5,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import java.io.Serializable;
 import java.util.Objects;
 @Entity @Table(name = "theloai")
-public class TheLoai {
+public class TheLoai implements Serializable{
+	private static final long serialVersionUID = 5233515208980637667L;
 	@Id
 	private String maTheLoai;
 	@Column(columnDefinition = "nvarchar(255)")

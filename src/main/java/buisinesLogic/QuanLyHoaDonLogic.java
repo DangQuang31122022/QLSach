@@ -1,6 +1,7 @@
 package buisinesLogic;
 
 import java.net.Socket;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,9 +31,8 @@ public class QuanLyHoaDonLogic {
 		return hoaDonDAO.getAllHoaDon();
 	}
 
-	public double[] tinhTongTien() {
+	public double[] tinhTongTien(List<HoaDon> dshd) {
 		cthd_DAO = new ChiTietHoaDonDAO(em);
-		List<HoaDon> dshd = loadAllDataHD();
 		double[] listTongTien = new double[dshd.size()]; // Khởi tạo mảng listTongTien với kích thước là số lượng hóa
 															// đơn
 		int index = 0; // Biến index để lưu vị trí cần gán tổng tiền vào mảng listTongTien
@@ -51,4 +51,34 @@ public class QuanLyHoaDonLogic {
 		}
 		return listTongTien;
 	}
+
+	public List<ChiTietHoaDon> getAllCTHDByID(String id) {
+		cthd_DAO = new ChiTietHoaDonDAO(em);
+		return cthd_DAO.getCTHDById(id);
+	}
+
+	public List<HoaDon> getDsHDByDate(Date from, Date to) {
+		hoaDonDAO = new HoaDonDAO(em);
+		return hoaDonDAO.getHoaDonByDate(from, to);
+	}
+
+	public HoaDon getHDByID(String id) {
+		hoaDonDAO = new HoaDonDAO(em);
+		return hoaDonDAO.getHoaDonByID(id);
+	}
+
+	public double tinhTongTien1HD(HoaDon hd) {
+		cthd_DAO = new ChiTietHoaDonDAO(em);
+
+		double tongTien = 0; // Khởi tạo biến tongTien để tính tổng tiền của mỗi hóa đơn
+
+		List<ChiTietHoaDon> listCTHDByID = cthd_DAO.getCTHDById(hd.getMaHD());
+
+		for (ChiTietHoaDon cthd : listCTHDByID) {
+			tongTien += cthd.thanhTien();
+		}
+
+		return tongTien;
+	}
+
 }
