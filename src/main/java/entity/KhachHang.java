@@ -1,12 +1,17 @@
 package entity;
 
+import java.io.Serializable;
+import java.util.Objects;
+
 //import dao.KhachHangDAO;
 import constant.Constants;
 import dao.KhachHangDAO;
 import jakarta.persistence.*;
 
 @Entity @Table(name = "khachhang")
-public class KhachHang {
+public class KhachHang implements Serializable{
+	
+	private static final long serialVersionUID = 4834250152476100158L;
 	@Id
 	private String maKhachHang;
 	@Column(columnDefinition = "nvarchar(255)")
@@ -82,6 +87,23 @@ public class KhachHang {
 
 	public void setGioiTinh(boolean gioiTinh) {
 		this.gioiTinh = gioiTinh;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(maKhachHang);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		KhachHang other = (KhachHang) obj;
+		return Objects.equals(maKhachHang, other.maKhachHang);
 	}
 	
 	

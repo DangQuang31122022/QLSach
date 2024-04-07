@@ -56,10 +56,12 @@ public class ProgressRunnable implements Runnable {
                         forgotPasswordLogic.handleForgotPassword();
                         break;
                     case "loadTblHoaDon":
-                    	QuanLyHoaDonLogic loadAllDataHD = new QuanLyHoaDonLogic(em, client);
-                    	List<HoaDon> dshd =  loadAllDataHD.loadAllDataHD();
+                    	QuanLyHoaDonLogic loadTblHD = new QuanLyHoaDonLogic(em, client);
+                    	List<HoaDon> dshd =  loadTblHD.loadAllDataHD();
                     	dshd.forEach(System.out::println);
                     	out.writeObject(dshd);
+                    	double[] listTongTien = loadTblHD.tinhTongTien();
+                    	out.writeObject(listTongTien);
                     	break;
                     default:
                         System.out.println("Unknown request: " + type);
