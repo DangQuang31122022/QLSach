@@ -33,6 +33,13 @@ public class HoaDonDAO {
             return null; // Trả về null nếu không tìm thấy kết quả
         }
     }
+    
+	public String auto_IDPHoaDon() {
+		String idPrefix = "HD";
+		int length = getAllHoaDon().size();
+		String finalId = idPrefix + String.format("%05d", length + 1);
+		return finalId;
+	}
 //    
 //    public ArrayList<HoaDon> getAllHoaDon(String tenKhachHang, String tenNhanVien) {
 //        return (ArrayList<HoaDon>) em.createQuery("SELECT hd FROM HoaDon hd WHERE hd.khachHang.tenKhachHang like :tenKhachHang and hd.nhanVien.tenNhanVien like :tenNhanVien", HoaDon.class)
@@ -61,16 +68,16 @@ public class HoaDonDAO {
 //        return em.find(HoaDon.class, id);
 //    }
 //    
-//    public int addHoaDon(HoaDon hoaDon) {
-//        try {
-//            et.begin();
-//            em.persist(hoaDon);
-//            et.commit();
-//            return 1;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            et.rollback();
-//        }
-//        return 0;
-//    }
+    public int addHoaDon(HoaDon hoaDon) {
+        try {
+            et.begin();
+            em.persist(hoaDon);
+            et.commit();
+            return 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            et.rollback();
+        }
+        return 0;
+    }
 }

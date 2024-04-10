@@ -18,6 +18,7 @@ public class NhanVienDAO {
     public ArrayList<NhanVien>getAllNhanVien(){
         return (ArrayList<NhanVien>) em.createQuery("SELECT nv FROM NhanVien nv", NhanVien.class).getResultList();
     }
+    
     public boolean dieuKienQuenMatkhau(String gmail) {
         return em.createQuery("SELECT nv FROM NhanVien nv WHERE nv.email = :gmail", NhanVien.class)
                 .setParameter("gmail", gmail)

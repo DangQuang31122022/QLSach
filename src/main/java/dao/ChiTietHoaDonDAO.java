@@ -35,18 +35,18 @@ public class ChiTietHoaDonDAO {
                 .getResultList();
     }
     
-//    public int addChiTietHoaDon(ChiTietHoaDon cthd){
-//        try {
-//            et.begin();
-//            em.persist(cthd);
-//            et.commit();
-//            return 1;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            et.rollback();
-//        }
-//        return 0;
-//    }
+    public int addChiTietHoaDon(ChiTietHoaDon cthd){
+        try {
+            et.begin();
+            em.persist(cthd);
+            et.commit();
+            return 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            et.rollback();
+        }
+        return 0;
+    }
 //    
 //    public int capNhatSoLuong(SanPham sanPham){
 //        try {
