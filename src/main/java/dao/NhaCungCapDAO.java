@@ -7,9 +7,10 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NhaCungCapDAO {
-    private EntityManager em;
+    private static EntityManager em;
     private EntityTransaction et;
 
     public NhaCungCapDAO(EntityManager em) {
@@ -62,13 +63,24 @@ public class NhaCungCapDAO {
                 .getSingleResult();
     }
     public static NhaCungCap getNhaCungCapByGmail(String gmail){
-        return (NhaCungCap) Persistence.createEntityManagerFactory(Constants.DatabaseType).createEntityManager().createQuery("SELECT n FROM NhaCungCap n WHERE n.email = :email")
-                .setParameter("email", gmail)
-                .getSingleResult();
+        List<NhaCungCap> nhaCungCaps = em.createQuery("SELECT n FROM NhaCungCap n WHERE n.email = :gmail", NhaCungCap.class)
+                .setParameter("gmail", gmail)
+                .getResultList();
+        if(nhaCungCaps.isEmpty()){
+            return null;
+        }
+        return nhaCungCaps.get(0);
     }
     public static NhaCungCap getNhaCungCapBySdt(String sdt) {
-        return (NhaCungCap) Persistence.createEntityManagerFactory(Constants.DatabaseType).createEntityManager().createQuery("SELECT n FROM NhaCungCap n WHERE n.SoDienThoai = :sdt")
+        List<NhaCungCap> nhaCungCaps = em.createQuery("SELECT n FROM NhaCungCap n WHERE n.SoDienThoai = :sdt", NhaCungCap.class)
                 .setParameter("sdt", sdt)
-                .getSingleResult();
+                .getResultList();
+        if(nhaCungCaps.isEmpty()){
+            return null;
+        }
+        return nhaCungCaps.get(0);
+    }
+    public String generateId(){
+        return "NCC" + String.format("%02d", getAllNhaCungCap().size() + 1);
     }
 }

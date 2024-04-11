@@ -31,11 +31,11 @@ public class LoginLogic {
         TaiKhoanDAO taiKhoanDAO = new TaiKhoanDAO(em);
         return taiKhoanDAO.cvTaiKhoan(username);
     }
-    public void checkLogin() {
+    public void checkLogin(Scanner sc) {
         // read json request
         try {
             // Receive request from client
-            Scanner sc = new Scanner(client.getInputStream());
+//            Scanner sc = new Scanner(client.getInputStream());
             String request = sc.nextLine();
             System.out.println("Info Login: " + request);
 

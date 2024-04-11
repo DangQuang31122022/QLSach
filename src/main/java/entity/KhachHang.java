@@ -35,14 +35,14 @@ public class KhachHang {
 		this.soDienThoai = soDienThoai;
 		this.gioiTinh = gioiTinh;
 	}
-	public String auto_ID(){
-		EntityManager em = Persistence.createEntityManagerFactory(Constants.DatabaseType).createEntityManager();
-		KhachHangDAO KH_DAO = new KhachHangDAO(em);
-	        String idPrefix = "KH";
-	        int length = KH_DAO.getAllKhachHang().size();
-	        String finalId = idPrefix + String.format("%04d", length + 1);
-	        return finalId;
-	    }
+//	public String auto_ID(){
+//		EntityManager em = Persistence.createEntityManagerFactory(Constants.DatabaseType).createEntityManager();
+//		KhachHangDAO KH_DAO = new KhachHangDAO(em);
+//	        String idPrefix = "KH";
+//	        int length = KH_DAO.getAllKhachHang().size();
+//	        String finalId = idPrefix + String.format("%04d", length + 1);
+//	        return finalId;
+//	    }
 
 	public String getMaKhachHang() {
 		return maKhachHang;
