@@ -1,5 +1,7 @@
 package entity;
 
+import java.io.Serializable;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,12 +11,14 @@ import lombok.Setter;
 @Table(name = "sanpham")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "loaiSP", discriminatorType = DiscriminatorType.STRING)
-public abstract class SanPham {
+public abstract class SanPham implements Serializable{
+	private static final long serialVersionUID = 3501484191432628748L;
 	@Id
 	private String maSP;
 	@Column(columnDefinition = "nvarchar(255)")
 	private String tenSP;
-	@ManyToOne(fetch = FetchType.LAZY)
+//	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "maNCC")
 	private NhaCungCap nhaCungCap;
 	private int soLuongTK;
@@ -137,5 +141,9 @@ public abstract class SanPham {
 	public void setHinhAnh(String hinhAnh) {
 		this.hinhAnh = hinhAnh;
 	}
+<<<<<<< HEAD
+	
+=======
 
+>>>>>>> b92623f6e1cf32669f6d4a5033c7a0f67f49d6b1
 }

@@ -1,5 +1,7 @@
 package entity;
 
+import java.io.Serializable;
+
 //import dao.ChiTietHoaDonDAO;
 //import dao.SanPhamDAO;
 
@@ -7,8 +9,9 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "chitiethoadon")
-public class ChiTietHoaDon {
-    @Id
+public class ChiTietHoaDon implements Serializable{
+    private static final long serialVersionUID = 4756319012794332621L;
+	@Id
     @ManyToOne
     @JoinColumn(name = "maSP")
     private SanPham sanPham;
@@ -52,7 +55,7 @@ public class ChiTietHoaDon {
     
     @Override
 	public String toString() {
-		return "ChiTietHoaDon [sanPham=" + sanPham + ", hoaDon=" + hoaDon + ", soLuong=" + soLuong + "]";
+		return "ChiTietHoaDon [sanPham=" + sanPham.getTenSP() + ", hoaDon=" + hoaDon + ", soLuong=" + soLuong + "]";
 	}
 
 	public double thanhTien() {
