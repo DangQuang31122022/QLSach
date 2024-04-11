@@ -16,7 +16,9 @@ import java.util.Map;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-    	try (EntityManager em = Persistence.createEntityManagerFactory("QLS MARIADB").createEntityManager()) {
+        try (EntityManager em = Persistence.createEntityManagerFactory("QLS SQlSERVER").createEntityManager()) {
+//            NhanVienDAO nhanVienDAO = new NhanVienDAO(em);
+//            System.out.println(nhanVienDAO.dieuKienQuenMatkhau("quangproforever@gmail.com"));
             ThreadPoolServer server = new ThreadPoolServer();
             server.createServerSocket(5000, em);
         }

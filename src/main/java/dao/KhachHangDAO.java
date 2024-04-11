@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class KhachHangDAO {
     private EntityManager em;
@@ -29,9 +30,13 @@ public class KhachHangDAO {
     }
     
     public KhachHang getKhachHangBySdt(String sdt){
-        return em.createQuery("SELECT kh FROM KhachHang kh WHERE kh.soDienThoai = :sdt", KhachHang.class)
+        List<KhachHang> khachHangs = em.createQuery("SELECT kh FROM KhachHang kh WHERE kh.soDienThoai = :sdt", KhachHang.class)
                 .setParameter("sdt", sdt)
-                .getSingleResult();
+                .getResultList();
+        if(khachHangs.isEmpty()){
+            return null;
+        }
+        return khachHangs.get(0);
     }
     
     public int updateKhachHang(KhachHang khachHang){
@@ -58,7 +63,20 @@ public class KhachHangDAO {
             et.rollback();
         }
         return -1;
-    } 
+    }
+    public String generateId(){
+        int length = getAllKhachHang().size();
+        return "KH" + String.format("%04d", length + 2);
+    }
+    public KhachHang getKhachHangByEmail(String email){
+        List<KhachHang> khachHangs = em.createQuery("SELECT kh FROM KhachHang kh WHERE kh.email = :email", KhachHang.class)
+                .setParameter("email", email)
+                .getResultList();
+        if(khachHangs.isEmpty()){
+            return null;
+        }
+        return khachHangs.get(0);
+    }
 }
 
 

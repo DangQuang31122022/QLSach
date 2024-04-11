@@ -1,10 +1,6 @@
 package server;
 
-import buisinesLogic.ForgotPasswordLogic;
-import buisinesLogic.LoginLogic;
-import buisinesLogic.QuanLyBanHangLogic;
-import buisinesLogic.QuanLyHoaDonLogic;
-
+import buisinesLogic.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -53,13 +49,25 @@ public class ProgressRunnable implements Runnable {
 				System.out.println("Received request: " + type);
 				switch (type) {
 				case "login":
-					LoginLogic loginLogic = new LoginLogic(em, client);
-					loginLogic.checkLogin();
-					break;
-				case "forgotPassword":
-					ForgotPasswordLogic forgotPasswordLogic = new ForgotPasswordLogic(client, em);
-					forgotPasswordLogic.handleForgotPassword();
-					break;
+                        LoginLogic loginLogic = new LoginLogic(em, client);
+                        loginLogic.checkLogin(scanner);
+                        break;
+                    case "forgotPassword":
+                        ForgotPasswordLogic forgotPasswordLogic = new ForgotPasswordLogic(client, em);
+                        forgotPasswordLogic.handleForgotPassword(scanner);
+                        break;
+                    case "customer":
+                        CustomerLogic customerLogic = new CustomerLogic(client, em);
+                        customerLogic.handleClientRequest(scanner);
+                        break;
+                    case "staff":
+                        StaffLogic staffLogic = new StaffLogic(client, em);
+                        staffLogic.handleClientRequest(scanner);
+                        break;
+                    case "supplier":
+                        SupplierLogic supplierLogic = new SupplierLogic(client, em);
+                        supplierLogic.handleClientRequest(scanner);
+                        break;
 				case "loadTblHoaDon":
 					QuanLyHoaDonLogic loadTblHD = new QuanLyHoaDonLogic(em, client);
 					List<HoaDon> dshd = loadTblHD.loadAllDataHD();
@@ -209,3 +217,6 @@ public class ProgressRunnable implements Runnable {
 	}
 
 }
+    
+
+   
