@@ -13,7 +13,7 @@ import jakarta.persistence.*;
 @Entity @Table(name = "chitietphieunhap")
 public class ChiTietPhieuNhap {
     @Id
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "maSP")
     private SanPham sanPham;
     @Id

@@ -20,14 +20,14 @@ public class NhanVien {
 	public NhanVien() {
 		super();
 	}
-	public String auto_ID(){
-		EntityManager em = Persistence.createEntityManagerFactory(Constants.DatabaseType).createEntityManager();
-	       NhanVienDAO NV_DAO = new NhanVienDAO(em);
-	        String idPrefix = "NV";
-	        int length = NV_DAO.getAllNhanVien().size();
-	        String finalId = idPrefix + String.format("%03d", length + 1);
-	        return finalId;
-	    }
+//	public String auto_ID(){
+//		EntityManager em = Persistence.createEntityManagerFactory(Constants.DatabaseType).createEntityManager();
+//	       NhanVienDAO NV_DAO = new NhanVienDAO(em);
+//	        String idPrefix = "NV";
+//	        int length = NV_DAO.getAllNhanVien().size();
+//	        String finalId = idPrefix + String.format("%03d", length + 1);
+//	        return finalId;
+//	    }
 	public NhanVien(String tenNhanVien, boolean gioiTinh, String chucVu, String soDienThoai, String email) {
 		super();
 		this.tenNhanVien = tenNhanVien;

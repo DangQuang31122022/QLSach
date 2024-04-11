@@ -1,7 +1,6 @@
 package server;
 
-import buisinesLogic.ForgotPasswordLogic;
-import buisinesLogic.LoginLogic;
+import buisinesLogic.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -38,11 +37,23 @@ public class ProgressRunnable implements Runnable {
                 switch (type) {
                     case "login":
                         LoginLogic loginLogic = new LoginLogic(em, client);
-                        loginLogic.checkLogin();
+                        loginLogic.checkLogin(scanner);
                         break;
                     case "forgotPassword":
                         ForgotPasswordLogic forgotPasswordLogic = new ForgotPasswordLogic(client, em);
-                        forgotPasswordLogic.handleForgotPassword();
+                        forgotPasswordLogic.handleForgotPassword(scanner);
+                        break;
+                    case "customer":
+                        CustomerLogic customerLogic = new CustomerLogic(client, em);
+                        customerLogic.handleClientRequest(scanner);
+                        break;
+                    case "staff":
+                        StaffLogic staffLogic = new StaffLogic(client, em);
+                        staffLogic.handleClientRequest(scanner);
+                        break;
+                    case "supplier":
+                        SupplierLogic supplierLogic = new SupplierLogic(client, em);
+                        supplierLogic.handleClientRequest(scanner);
                         break;
                     default:
                         System.out.println("Unknown request: " + type);
@@ -52,25 +63,6 @@ public class ProgressRunnable implements Runnable {
             throw new RuntimeException(e);
         }
     }
-//    private class login {
-//        private LoginDao loginDao = new LoginDao();
-//        private EntityManager em;
-//        public login(EntityManager em) {
-//            this.em = em;
-//        }
-//        public boolean handleLogin(String request) {
-//            JsonObject jsonObject = new JsonParser().parse(request).getAsJsonObject();
-//            String username = jsonObject.get("username").getAsString();
-//            String password = jsonObject.get("password").getAsString();
-//            return loginDao.checkLogin(username, password);
-//        }
-//        public boolean hanndleRole(String request) {
-//            TaiKhoanDAO taiKhoanDAO = new TaiKhoanDAO(em);
-//            JsonObject jsonObject = new JsonParser().parse(request).getAsJsonObject();
-//            String username = jsonObject.get("username").getAsString();
-//            return taiKhoanDAO.cvTaiKhoan(username);
-//        }
-//    }
 }
 
 

@@ -24,11 +24,10 @@ public class ForgotPasswordLogic {
     }
     public boolean checkMail(String mail) {
 
-            nhanVienDAO = new NhanVienDAO(em);
-            if (nhanVienDAO.dieuKienQuenMatkhau(mail)) {
-                return true;
-            }
-            return false;
+        nhanVienDAO = new NhanVienDAO(em);
+        if(nhanVienDAO.getNhanVienByGmail(mail) != null)
+            return true;
+        return false;
 
     }
     public boolean changePassword(String email, String password) {
@@ -41,10 +40,8 @@ public class ForgotPasswordLogic {
         }
         return false;
     }
-    public void handleForgotPassword() {
+    public void handleForgotPassword(Scanner sc) {
         try {
-            Scanner sc = new Scanner(client.getInputStream());
-
             // Receive request from client, get value from json request
             String request = sc.nextLine();
             System.out.println("Request: " + request);
