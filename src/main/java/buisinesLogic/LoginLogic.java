@@ -35,7 +35,6 @@ public class LoginLogic {
         // read json request
         try {
             // Receive request from client
-//            Scanner sc = new Scanner(client.getInputStream());
             String request = sc.nextLine();
             System.out.println("Info Login: " + request);
 
@@ -60,8 +59,8 @@ public class LoginLogic {
 //                String jsonResponse = gson.toJson(responseMap);
 //                System.out.println(jsonResponse);
                 String jsonResponse = "{\"login\":true,\"role\":" + isManager + "}";
-
                 pw.println(jsonResponse);
+                System.out.println(jsonResponse);
             } else {
                 System.out.println("Login failed");
                 Map<String, Boolean> responseMap = new HashMap<>();

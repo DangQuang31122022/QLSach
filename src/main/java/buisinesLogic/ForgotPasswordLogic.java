@@ -9,6 +9,7 @@ import entity.TaiKhoan;
 import jakarta.persistence.EntityManager;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -71,26 +72,6 @@ public class ForgotPasswordLogic {
                     client.getOutputStream().write(0);
                 }
             }
-//            System.out.println("ok");
-//            Scanner sc = new Scanner(client.getInputStream());
-////            System.out.println(sc.nextLine());
-//            while (sc.hasNextLine()) {
-//                String request = sc.nextLine();
-//                System.out.println("Request: " + request);
-//                if (request.equals("changePassword")) {
-////                    handleForgotPassword(client);
-//                } else if (request.equals("checkMail")) {
-//                    boolean checkMail = checkMail(sc);
-//                    if (checkMail) {
-//                        System.out.println("Check mail success");
-//                        client.getOutputStream().write(1);
-//                    } else {
-//                        System.out.println("Check mail failed");
-//                        client.getOutputStream().write(0);
-//                    }
-//                }
-                // handle other requests...
-//            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -141,9 +141,4 @@ public abstract class SanPham implements Serializable{
 	public void setHinhAnh(String hinhAnh) {
 		this.hinhAnh = hinhAnh;
 	}
-<<<<<<< HEAD
-	
-=======
-
->>>>>>> b92623f6e1cf32669f6d4a5033c7a0f67f49d6b1
 }

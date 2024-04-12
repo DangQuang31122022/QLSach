@@ -8,6 +8,10 @@ import jakarta.persistence.*;
 @Entity
 @DiscriminatorValue("Sách")
 public class Sach extends SanPham {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3347760287841147584L;
 	@ManyToOne
 	@JoinColumn(name = "maNXB")
 	private NhaXuatBan nhaXuatBan;

@@ -6,13 +6,20 @@ package entity;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+
 /**
  *
  * @author LENOVO
  */
 @Entity @Table(name = "taikhoan")
-public class TaiKhoan {
-    @Id
+public class TaiKhoan implements Serializable {
+
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5013107283532448504L;
+	@Id
     @OneToOne
     @JoinColumn(name = "maNhanVien")
    private NhanVien tenDangNhap;
