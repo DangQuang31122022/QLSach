@@ -41,14 +41,14 @@ public class ProgressRunnable implements Runnable {
 		try {
 			Scanner scanner = new Scanner(client.getInputStream());
 			ObjectOutputStream out = new ObjectOutputStream(client.getOutputStream());
-			ObjectInputStream in = new ObjectInputStream(client.getInputStream());
+//			ObjectInputStream in = new ObjectInputStream(client.getInputStream());
 			while (true) {
 				if (!scanner.hasNextLine())
 					break;
 				String type = scanner.nextLine();
 				System.out.println("Received request: " + type);
 				switch (type) {
-				case "login":
+					case "login":
                         LoginLogic loginLogic = new LoginLogic(em, client);
                         loginLogic.checkLogin(scanner);
                         break;
@@ -148,6 +148,8 @@ public class ProgressRunnable implements Runnable {
 					out.writeObject(khBTNThanhToanQLBH);
 
 					try {
+						// this
+						ObjectInputStream in = new ObjectInputStream(client.getInputStream());
 						HoaDon hdBTNThanhToanQLBH = (HoaDon) in.readObject();
 						System.out.println(hdBTNThanhToanQLBH);
 						if (btnThanhToanQLBH.addHoaDon(hdBTNThanhToanQLBH) == 1) {
@@ -159,6 +161,8 @@ public class ProgressRunnable implements Runnable {
 						e.printStackTrace();
 					}
 					try {
+						// this
+						ObjectInputStream in = new ObjectInputStream(client.getInputStream());
 						int rowJTable_DSSPBan = (int) in.readObject();
 						for (int i = 0; i < rowJTable_DSSPBan; i++) {
 							String idSPbtnThanhToanQLBH = scanner.nextLine();
@@ -193,7 +197,7 @@ public class ProgressRunnable implements Runnable {
 					String idHDbtnThanhToanQLBH = scanner.nextLine();
 					List<ChiTietHoaDon> listCTHDQLBH = btnThanhToanQLBH.getAllCTHDByIDhd(idHDbtnThanhToanQLBH);
 					out.writeObject(listCTHDQLBH);
-					
+
 					String idHDAutoGenQLBH = btnThanhToanQLBH.getIDHDAutoGen();
 					out.writeObject(idHDAutoGenQLBH);
 					break;
@@ -206,7 +210,6 @@ public class ProgressRunnable implements Runnable {
 					QuanLyBanHangLogic btnXacNhanQLBH = new QuanLyBanHangLogic(em, client);
 					List<SanPham> listSPXacNhanQLBH = btnXacNhanQLBH.getAllSanPham();
 					out.writeObject(listSPXacNhanQLBH);
-					break;
 				default:
 					System.out.println("Unknown request: " + type);
 				}

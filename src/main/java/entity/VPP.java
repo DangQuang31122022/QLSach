@@ -13,6 +13,10 @@ import jakarta.persistence.Persistence;
 @Entity
 @DiscriminatorValue("VPP")
 public class VPP extends SanPham {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1282965267097119153L;
 	private String xuatXu;
 	private String mauSac;
 	private String chatLieu;
