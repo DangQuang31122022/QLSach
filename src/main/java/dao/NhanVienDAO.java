@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NhanVienDAO {
     private EntityManager em;
@@ -18,7 +19,6 @@ public class NhanVienDAO {
     public ArrayList<NhanVien>getAllNhanVien(){
         return (ArrayList<NhanVien>) em.createQuery("SELECT nv FROM NhanVien nv", NhanVien.class).getResultList();
     }
-    
     public boolean dieuKienQuenMatkhau(String gmail) {
         return em.createQuery("SELECT nv FROM NhanVien nv WHERE nv.email = :gmail", NhanVien.class)
                 .setParameter("gmail", gmail)
@@ -34,15 +34,19 @@ public class NhanVienDAO {
                 .getSingleResult();
     }
     public NhanVien getNhanVienBySdt(String sdt) {
-		return em.createQuery("SELECT nv FROM NhanVien nv WHERE nv.soDienThoai = :sdt", NhanVien.class)
+		List<NhanVien> list = em.createQuery("SELECT nv FROM NhanVien nv WHERE nv.soDienThoai = :sdt", NhanVien.class)
                 .setParameter("sdt", sdt)
-                .getSingleResult();
+                .getResultList();
+        if (!list.isEmpty()) return list.get(0);
+        return null;
 	}
 
     public NhanVien getNhanVienByGmail(String gmail){
-        return em.createQuery("SELECT nv FROM NhanVien nv WHERE nv.email = :gmail", NhanVien.class)
+        List<NhanVien> list = em.createQuery("SELECT nv FROM NhanVien nv WHERE nv.email = :gmail", NhanVien.class)
                 .setParameter("gmail", gmail)
-                .getSingleResult();
+                .getResultList();
+        if (!list.isEmpty()) return list.get(0);
+        return null;
     }
     
     public int updateNhanVien(NhanVien nhanVien){
@@ -57,7 +61,9 @@ public class NhanVienDAO {
         }
         return -1;
     }
-    
+    public String generateID(){
+        return "NV" + String.format("%03d", getAllNhanVien().size() + 1);
+    }
 //    public int updateOTP(String gmail, String OTP, Timestamp expiredAt){
 //        ConnectDB.getInstance();
 //        Connection conn = ConnectDB.getConnection();

@@ -34,14 +34,14 @@ public class NhaCungCap implements Serializable{
 		this.SoDienThoai = SDT;
 		this.email = email;
 	}
-	public String auto_ID(){
-		EntityManager em = Persistence.createEntityManagerFactory(Constants.DatabaseType).createEntityManager();
-	       NhaCungCapDAO ncc= new NhaCungCapDAO(em);
-	        String idPrefix = "NCC";
-	        int length = ncc.getAllNhaCungCap().size();
-	        String finalId = idPrefix + String.format("%02d", length + 1);
-	        return finalId;
-	    }
+//	public String auto_ID(){
+//		EntityManager em = Persistence.createEntityManagerFactory(Constants.DatabaseType).createEntityManager();
+//	       NhaCungCapDAO ncc= new NhaCungCapDAO(em);
+//	        String idPrefix = "NCC";
+//	        int length = ncc.getAllNhaCungCap().size();
+//	        String finalId = idPrefix + String.format("%02d", length + 1);
+//	        return finalId;
+//	    }
 	public NhaCungCap(String tenNCC, String diaChi) {
 		super();
 		this.tenNCC = tenNCC;

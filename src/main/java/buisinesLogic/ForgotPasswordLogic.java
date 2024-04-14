@@ -9,6 +9,7 @@ import entity.TaiKhoan;
 import jakarta.persistence.EntityManager;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -24,11 +25,10 @@ public class ForgotPasswordLogic {
     }
     public boolean checkMail(String mail) {
 
-            nhanVienDAO = new NhanVienDAO(em);
-            if (nhanVienDAO.dieuKienQuenMatkhau(mail)) {
-                return true;
-            }
-            return false;
+        nhanVienDAO = new NhanVienDAO(em);
+        if(nhanVienDAO.getNhanVienByGmail(mail) != null)
+            return true;
+        return false;
 
     }
     public boolean changePassword(String email, String password) {
@@ -41,10 +41,8 @@ public class ForgotPasswordLogic {
         }
         return false;
     }
-    public void handleForgotPassword() {
+    public void handleForgotPassword(Scanner sc) {
         try {
-            Scanner sc = new Scanner(client.getInputStream());
-
             // Receive request from client, get value from json request
             String request = sc.nextLine();
             System.out.println("Request: " + request);
@@ -74,26 +72,6 @@ public class ForgotPasswordLogic {
                     client.getOutputStream().write(0);
                 }
             }
-//            System.out.println("ok");
-//            Scanner sc = new Scanner(client.getInputStream());
-////            System.out.println(sc.nextLine());
-//            while (sc.hasNextLine()) {
-//                String request = sc.nextLine();
-//                System.out.println("Request: " + request);
-//                if (request.equals("changePassword")) {
-////                    handleForgotPassword(client);
-//                } else if (request.equals("checkMail")) {
-//                    boolean checkMail = checkMail(sc);
-//                    if (checkMail) {
-//                        System.out.println("Check mail success");
-//                        client.getOutputStream().write(1);
-//                    } else {
-//                        System.out.println("Check mail failed");
-//                        client.getOutputStream().write(0);
-//                    }
-//                }
-                // handle other requests...
-//            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

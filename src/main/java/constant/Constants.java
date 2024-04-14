@@ -1,12 +1,10 @@
 package constant;
 
 public final class Constants {
-	// Không cho phép khởi tạo đối tượng từ lớp này
+    // Không cho phép khởi tạo đối tượng từ lớp này
 
-	private Constants() {
-	}
+    private Constants() {}
 
-	// Định nghĩa các hằng số ở đây
-//    public static final String DatabaseType = "QLS SQlSERVER";
-	public static final String DatabaseType = "QLS MARIADB";
+    // Định nghĩa các hằng số ở đây
+    public static final String DatabaseType = "QLS SQlSERVER";
 }
