@@ -1,6 +1,9 @@
 package entity;
 
 import java.io.Serializable;
+import java.lang.reflect.Type;
+
+import com.google.gson.InstanceCreator;
 
 import jakarta.persistence.*;
 import lombok.Getter;
