@@ -65,6 +65,7 @@ public class SupplierLogic {
     public void add(Scanner scanner) {
         String json = scanner.nextLine();
         NhaCungCap nhaCungCap = new Gson().fromJson(json, NhaCungCap.class);
+        nhaCungCap.setMaNCC(nhaCungCapDAO.generateId());
         // check email exists
         if (NhaCungCapDAO.getNhaCungCapByGmail(nhaCungCap.getEmail()) != null) {
             try {
