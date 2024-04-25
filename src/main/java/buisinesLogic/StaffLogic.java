@@ -65,6 +65,7 @@ public class StaffLogic {
     public void add(Scanner scanner) {
         String json = scanner.nextLine();
         NhanVien nhanVien = new Gson().fromJson(json, NhanVien.class);
+        nhanVien.setMaNhanVien(nhanVienDAO.generateID());
         // check email exists
         if (nhanVienDAO.getNhanVienByGmail(nhanVien.getEmail()) != null) {
             try {

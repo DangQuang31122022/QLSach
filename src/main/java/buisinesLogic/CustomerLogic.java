@@ -82,6 +82,7 @@ public class CustomerLogic {
         String json = scanner.nextLine();
         // get email from json
         KhachHang khachHang = new Gson().fromJson(json, KhachHang.class);
+        khachHang.setMaKhachHang(khachHangDAO.generateId());
         // check mail exists
         if (khachHangDAO.getKhachHangByEmail(khachHang.getEmail()) != null) {
             // send response to client
