@@ -1,8 +1,9 @@
 package entity;
 
 //import dao.SachDao;
-import constant.Constants;
+import Constant.Constants;
 import dao.SachDao;
+import dao.VppDao;
 import jakarta.persistence.*;
 
 @Entity
@@ -59,10 +60,10 @@ public class Sach extends SanPham {
 	 */
 	public String auto_ID() {
 		EntityManager em = Persistence.createEntityManagerFactory(Constants.DatabaseType).createEntityManager();
-		SachDao sach_dao= new SachDao(em);
+		SachDao vpp_dao = new SachDao(em);
 		String idPrefix="S";
-		int length=sach_dao.getAllSach().size();
-		String finalId=idPrefix +String.format("%04d",length+1);
+		int length=vpp_dao.getAllSach().size();
+		String finalId=idPrefix +String.format("%04d",length);
 		return finalId;
 	}
 	public Sach() {

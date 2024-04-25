@@ -6,12 +6,13 @@ package entity;
 
 //import dao.ChiTietPhieuNhapDAO;
 //import dao.PhieuNhapDAO;
-import constant.Constants;
+import Constant.Constants;
 import dao.ChiTietPhieuNhapDAO;
 import dao.PhieuNhapDAO;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 import java.sql.Date;
 
 /**
@@ -19,8 +20,9 @@ import java.sql.Date;
  * @author trana
  */
 @Entity @Table(name = "phieunhap")
-public class PhieuNhap {
-    @Id
+public class PhieuNhap implements Serializable {
+    private static final long serialVersionUID = -7506021810581856156L;
+	@Id
     private String maPhieuNhap;
     private Date ngayNhap;
 

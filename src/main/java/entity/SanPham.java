@@ -122,7 +122,7 @@ public abstract class SanPham implements Serializable{
 	}
 
 //	public String getLoaiSP() {
-//		return loaiSP;
+//		return loai;
 //	}
 //
 //	public void setLoaiSP(String loaiSP) {
