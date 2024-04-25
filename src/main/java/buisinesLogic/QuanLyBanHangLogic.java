@@ -60,6 +60,7 @@ public class QuanLyBanHangLogic {
 			getAllSP();
 			break;
 		case "thanhToan":
+			getIDHDAutoGen();
 			getNVByID(scanner);
 			getKHBySDT(scanner);
 			String hdObject = scanner.nextLine();
