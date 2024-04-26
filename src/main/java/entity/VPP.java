@@ -3,7 +3,7 @@ package entity;
 //import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 
 //import dao.VppDao;
-import constant.Constants;
+import Constant.Constants;
 import dao.VppDao;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
@@ -82,7 +82,7 @@ public class VPP extends SanPham {
 		VppDao vpp_dao = new VppDao(em);
 		String idPrefix="H";
 		int length=vpp_dao.getAllVPP().size();
-		String finalId=idPrefix +String.format("%04d",length+1);
+		String finalId=idPrefix +String.format("%04d",length);
 		return finalId;
 	}
 	public VPP(String maSP, String tenSP, NhaCungCap nhaCungCap, int soLuongTK, double donGiaBan, String hinhAnh,
